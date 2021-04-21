@@ -1,6 +1,7 @@
 package com.cosmos.controller;
 
 import com.cosmos.model.Department;
+import com.cosmos.pojo.DepartmentEmployeesPojo;
 import com.cosmos.pojo.Departments;
 import com.cosmos.service.DepartmentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,10 @@ public class DepartmentController {
     @GetMapping("/{deptId}")
     public Department getDepartmentById(@PathVariable Long deptId){
         return departmentService.getDepartmentById(deptId);
+    }
+    @GetMapping("/{deptId}/emp")
+    public DepartmentEmployeesPojo getAllEmployeeByDepartmentId(@PathVariable Long deptId){
+        return departmentService.getAllEmployeeByDepartmentId(deptId);
     }
     @GetMapping()
     public Departments getAllDepartment(){

@@ -1,10 +1,13 @@
 package com.cosmos.service;
 
 import com.cosmos.model.Department;
+import com.cosmos.pojo.DepartmentEmployeesPojo;
 import com.cosmos.pojo.Departments;
+import com.cosmos.pojo.Employees;
 import com.cosmos.repository.DepartmentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.List;
 
@@ -12,6 +15,8 @@ import java.util.List;
 public class DepartmentService {
     @Autowired
     private DepartmentRepository departmentRepository;
+    @Autowired
+    private RestTemplate restTemplate;
     public Department getDepartmentById(Long deptId) {
         return departmentRepository.findById(deptId).get();
     }
@@ -32,5 +37,14 @@ public class DepartmentService {
         Departments departments = new Departments();
         departments.setDepartments(departmentList);
         return departments;
+    }
+
+    public DepartmentEmployeesPojo getAllEmployeeByDepartmentId(Long deptId) {
+        DepartmentEmployeesPojo departmentEmployeesPojo = new DepartmentEmployeesPojo();
+        Department department= departmentRepository.findById(deptId).get();
+        Employees employees=restTemplate.getForObject("http://localhost:9007/employee/filterdept/"+deptId , Employees.class);
+        departmentEmployeesPojo.setDepartment(department);
+        departmentEmployeesPojo.setEmployees(employees);
+        return departmentEmployeesPojo;
     }
 }
