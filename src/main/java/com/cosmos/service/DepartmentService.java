@@ -13,6 +13,9 @@ import java.util.List;
 
 @Service
 public class DepartmentService {
+    private String empHardCodedURL="http://localhost:9007/employee";
+    private String employeeURL="http://EMPLOYEE-SERVICE/employee";
+
     @Autowired
     private DepartmentRepository departmentRepository;
     @Autowired
@@ -42,7 +45,7 @@ public class DepartmentService {
     public DepartmentEmployeesPojo getAllEmployeeByDepartmentId(Long deptId) {
         DepartmentEmployeesPojo departmentEmployeesPojo = new DepartmentEmployeesPojo();
         Department department= departmentRepository.findById(deptId).get();
-        Employees employees=restTemplate.getForObject("http://localhost:9007/employee/filterdept/"+deptId , Employees.class);
+        Employees employees=restTemplate.getForObject(employeeURL+"/filterdept/"+deptId , Employees.class);
         departmentEmployeesPojo.setDepartment(department);
         departmentEmployeesPojo.setEmployees(employees);
         return departmentEmployeesPojo;
