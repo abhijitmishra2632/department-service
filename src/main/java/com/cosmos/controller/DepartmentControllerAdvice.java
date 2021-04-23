@@ -1,4 +1,4 @@
-package com.cosmos;
+package com.cosmos.controller;
 
 import com.cosmos.exception.DepartmentServiceException;
 import com.cosmos.pojo.DepartmentError;
